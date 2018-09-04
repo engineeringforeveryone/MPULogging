@@ -59,6 +59,10 @@ def write_file(data):
 # data from Arduino is in the format
 # accelerometer, gyroscope, compass
 # ax, ay, az, gx, gy, gz, cx, cy, cz
+
+# run this script after the arduino is connected
+# press q to quit.
+# 
 def main():
     available_ports = serial_ports()
 
@@ -107,8 +111,7 @@ def main():
                 data_buffer = []
                 
                 
-                
-
+            
         print(count, 'lines read.')
 
 if __name__=='__main__':
