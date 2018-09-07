@@ -48,10 +48,11 @@ def write_file(data):
     filename =  datetime.datetime.now().strftime('%Y%m%d_%H%M%S') + '.csv'
     filepath = 'out/' + filename
 
+    count = 1
     with open(filepath, 'w') as outfile:
-        
+        outfile.write(',ax,ay,az,gx,gy,gz,cx,cy,cz\n')
         for line in data:
-            outfile.write(line)
+            outfile.write(str(count) + ','+line)
         
     print('Successfully wrote to file: ' + filename)
 
@@ -66,17 +67,19 @@ def write_file(data):
 def main():
     available_ports = serial_ports()
 
-    print(available_ports)
+    # print(available_ports)
 
     # connect to serial port
-    # for now serial port is COM5 or second port returned by serial_ports()
+    # for now serial port is COM10 or second port returned by serial_ports()
     logger_port = 'COM10'
     if len(available_ports) > 1:
         logger_port = available_ports[1]
     else:
+        print('Arduino Micro not connected. Exiting...')
         exit()
 
-    
+
+    print('Started logging serial data. ')    
 
     # set up serial
     ser = serial.Serial()
@@ -108,6 +111,8 @@ def main():
                 thread_writefile = threading.Thread(target=write_file, args=(data_buffer.copy(), ))
                 thread_writefile.start()
                 print('2500 lines read.')
+                
+                # clear buffer
                 data_buffer = []
                 
                 

@@ -17,7 +17,7 @@
 #include "MPU6050.h"
 #include "Wire.h"
 
-// 500 Hz sampling rate
+// 250 Hz sampling rate
 #define SAMPLING_RATE 250
 
 //MPU6050 Accelerometer 
@@ -94,7 +94,7 @@ void loop()
     current_micros = micros();
     if (current_micros - prev_sample_micros > SAMPLING_PERIOD)
     {
-      start_time = micros();
+        start_time = micros();
         accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
         
@@ -115,50 +115,21 @@ void loop()
         }
         end_time = micros();
         prev_sample_micros = current_micros;
+
+        Serial.print(ax); Serial.print(",");
+        Serial.print(ay); Serial.print(",");
+        Serial.print(az); 
+        Serial.print(",");
+        Serial.print(gx); Serial.print(",");
+        Serial.print(gy); Serial.print(",");
+        Serial.print(gz); Serial.print(",");
+        Serial.print(x); Serial.print(",");
+        Serial.print(y); Serial.print(",");
+        Serial.print(z); 
+        Serial.print('\n');
     }
-    // read raw accel/gyro measurements from device
-    
 
 
-    // blink LED to indicate activity
-    blinkState = !blinkState;
-    digitalWrite(LEDPin, blinkState);
-    
-  
-    //Accessing the HMC5883L Digital Compass  
-    //Tell the HMC5883L where to begin reading the data
-//    print_debug();
-
-    
-    // int angle = atan2(-y,x)/M_PI*180;
-    // if (angle < 0)
-    // {
-    //   angle = angle + 360;
-    // }
-    
-    // //Reporting the Compass data to the Serial port
-    // //Serial.print("Compass XYZ:\t");
-    // //Serial.print(x,y,z);Serial.print("\t");
-    // Serial.print("Dir(deg):\t");
-    // Serial.print(angle); Serial.print("\t");
-
-    // these methods (and a few others) are also available 
-    //accelgyro.getAcceleration(&ax, &ay, &az);
-    //accelgyro.getRotation(&gx, &gy, &gz);
-    
-    // // display tab-separated accel/gyro,compass x/y/z 
-     Serial.print(ax); Serial.print(",");
-     Serial.print(ay); Serial.print(",");
-     Serial.print(az); 
-    //  Serial.print(",");
-    //  Serial.print(gx); Serial.print(",");
-    //  Serial.print(gy); Serial.print(",");
-    //  Serial.print(gz); Serial.print(",");
-    //  Serial.print(x); Serial.print(",");
-    //  Serial.print(y); Serial.print(",");
-    //  Serial.print(z); 
-    Serial.print('\n');
-    // terminate transmission with a newline
 }
 
 
